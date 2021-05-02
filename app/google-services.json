@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "648551012086",
+    "project_id": "fs-test-chat",
+    "storage_bucket": "fs-test-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648551012086:android:523ac21ca1163e31253ed7",
+        "android_client_info": {
+          "package_name": "com.example.foodsharing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648551012086-4ja19ogbqdalj0m7254u0m1ml43euv70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW_lupzC6UAHlvtN6pXHNeXma3aPEHzdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648551012086-4ja19ogbqdalj0m7254u0m1ml43euv70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648551012086:android:b619eb89f900d6a0253ed7",
+        "android_client_info": {
+          "package_name": "foodsharing.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648551012086-ih6tl99gqv7ie56m5lhefjkeksk0tqta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "foodsharing.com",
+            "certificate_hash": "f2ad6de5727650c4eb346046e85d1ffa442c8035"
+          }
+        },
+        {
+          "client_id": "648551012086-4ja19ogbqdalj0m7254u0m1ml43euv70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW_lupzC6UAHlvtN6pXHNeXma3aPEHzdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648551012086-4ja19ogbqdalj0m7254u0m1ml43euv70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
