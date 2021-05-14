@@ -8,6 +8,9 @@ public class FoodModel {
     String address_title;
     String data;
 
+    FoodModel(){
+
+    }
     public String getUrl() {
         return url;
     }

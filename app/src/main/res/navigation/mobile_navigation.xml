@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/navigation_food"
-        android:name="com.example.foodsharing.ui.food.FoodFragment"
+        android:name="com.example.foodsharing.ui.food.FoodFragmentKt"
         android:label="@string/title_food"
         tools:layout="@layout/fragment_food" />
     <fragment

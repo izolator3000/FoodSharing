@@ -6,8 +6,11 @@ import com.example.foodsharing.model.User;
 import java.util.List;
 import java.util.Map;
 
+import kotlinx.coroutines.flow.Flow;
+
 public interface Provider {
-    List<Map<String, Object>> getDataFromFireBase();
+  //  void getDataFromFireBase();
+    Flow<List<FoodModel>> observeFoods();
     void pushRequest(FoodModel foodModel);
     User getCurrentUser();
 }

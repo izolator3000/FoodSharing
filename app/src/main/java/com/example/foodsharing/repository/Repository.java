@@ -2,19 +2,21 @@ package com.example.foodsharing.repository;
 
 import com.example.foodsharing.model.FoodModel;
 import com.example.foodsharing.model.User;
-import com.example.foodsharing.repository.remote.FirebaseDataProvider;
+import com.example.foodsharing.repository.remote.FirebaseDataProviderKt;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 import java.util.Map;
 
+import kotlinx.coroutines.flow.Flow;
+
 public class Repository implements Provider {
-    FirebaseDataProvider fbDataProvider = new FirebaseDataProvider();
+    FirebaseDataProviderKt fbDataProvider = new FirebaseDataProviderKt();
 
     @Override
-    public List<Map<String, Object>> getDataFromFireBase() {
-        return fbDataProvider.getDataFromFirebase();
+    public Flow<List<FoodModel>> observeFoods() {
+        return fbDataProvider.observeFoods();
     }
 
     @Override

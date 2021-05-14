@@ -20,8 +20,9 @@ import java.util.List;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
     private List<FoodModel> data = new ArrayList<>();
 
-    public void setData(ArrayList<FoodModel> newData) {
+    public void setData(List<FoodModel> newData) {
         data = newData;
+        notifyDataSetChanged();
     }
 
     @NonNull
