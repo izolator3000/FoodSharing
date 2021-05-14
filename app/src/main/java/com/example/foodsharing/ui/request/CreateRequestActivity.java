@@ -27,8 +27,8 @@ import java.util.Objects;
 public class CreateRequestActivity extends AppCompatActivity {
 
     private ImageView avatarView;
-    private MaterialButton gaveBtn;
-    private TextInputEditText titleInputLayout, addressInputLayout, fromInputLayout, toInputLayout;
+    private MaterialButton gaveBtn, mapsBtn;
+    private TextInputEditText titleInputLayout;
     private CalendarView calendarView;
     private RadioButton thing, collect;
     private CreateRequestViewModel createRequestViewModel;
@@ -55,19 +55,17 @@ public class CreateRequestActivity extends AppCompatActivity {
         });
 
         gaveBtn.setOnClickListener(v -> {
-            if (titleInputLayout == null || addressInputLayout == null) {
+            if (titleInputLayout == null) {
                 Toast.makeText(this, getString(R.string.input_address_and_title), Toast.LENGTH_SHORT).show();
             } else {
-                StringBuilder address = new StringBuilder("");
 
-                if (addressInputLayout != null) {
-                    address.append(addressInputLayout.getText());
-                    if (fromInputLayout != null && toInputLayout != null)
-                        address.append(": ").append(fromInputLayout.getText()).append("-").append(toInputLayout.getText());
-                }
-                FoodModel model = new FoodModel(Objects.requireNonNull(titleInputLayout.getText()).toString(), address.toString(), "Срок годности: " + selectedDate);
+                FoodModel model = new FoodModel(Objects.requireNonNull(titleInputLayout.getText()).toString(), "Address title", "Срок годности: " + selectedDate);
                 createRequestViewModel.pushRequest(model);
             }
+        });
+
+        mapsBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, MapsActivity.class));
         });
     }
 
@@ -75,12 +73,10 @@ public class CreateRequestActivity extends AppCompatActivity {
         avatarView = findViewById(R.id.avatar_view);
         gaveBtn = findViewById(R.id.gave_btn);
         titleInputLayout = findViewById(R.id.title_text_input_lay);
-        addressInputLayout = findViewById(R.id.address_text_input_lay);
-        fromInputLayout = findViewById(R.id.from_text_input_lay);
-        toInputLayout = findViewById(R.id.to_text_input_lay);
         calendarView = findViewById(R.id.calendarView);
         thing = findViewById(R.id.thing);
         collect = findViewById(R.id.collect_from_field);
+        mapsBtn = findViewById(R.id.maps_button);
     }
 
     @Override
@@ -88,7 +84,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_IMAGE.ordinal() && resultCode == RESULT_OK && null != data) {
             Uri selectedImageUri = data.getData();
-            Log.e(getClass().getSimpleName(),selectedImageUri.toString());
+            Log.e(getClass().getSimpleName(), selectedImageUri.toString());
             avatarView.setImageURI(selectedImageUri);
         } else {
             Toast.makeText(this, "You have not selected and image", Toast.LENGTH_SHORT).show();
