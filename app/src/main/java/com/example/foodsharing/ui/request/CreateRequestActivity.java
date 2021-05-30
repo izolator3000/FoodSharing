@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.foodsharing.R;
 import com.example.foodsharing.model.FoodModel;
 import com.example.foodsharing.util.Constants;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -32,6 +33,13 @@ public class CreateRequestActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private RadioButton thing, collect;
     private CreateRequestViewModel createRequestViewModel;
+
+    FoodModel model;
+
+    public static final String EXTRA_MAP_BUNDLE = "EXTRA_MAP_BUNDLE";
+
+    public static final String EXTRA_BUNDLE = "BUNDLE";
+    public static final int ACTIVITY_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,14 +66,15 @@ public class CreateRequestActivity extends AppCompatActivity {
             if (titleInputLayout == null) {
                 Toast.makeText(this, getString(R.string.input_address_and_title), Toast.LENGTH_SHORT).show();
             } else {
-
-                FoodModel model = new FoodModel(Objects.requireNonNull(titleInputLayout.getText()).toString(), "Address title", "Срок годности: " + selectedDate);
+                model.setTitle(Objects.requireNonNull(titleInputLayout.getText()).toString());
+                model.setData("Срок годности: " + selectedDate);
                 createRequestViewModel.pushRequest(model);
             }
         });
 
         mapsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, MapsActivity.class));
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
         });
     }
 
@@ -86,8 +95,13 @@ public class CreateRequestActivity extends AppCompatActivity {
             Uri selectedImageUri = data.getData();
             Log.e(getClass().getSimpleName(), selectedImageUri.toString());
             avatarView.setImageURI(selectedImageUri);
-        } else {
-            Toast.makeText(this, "You have not selected and image", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getParcelableExtra(EXTRA_BUNDLE);
+            model = new FoodModel();
+            model.setAddress(bundle.getParcelable(EXTRA_MAP_BUNDLE));
+            Toast.makeText(this, "SEND DATA", Toast.LENGTH_SHORT).show();
         }
     }
 }

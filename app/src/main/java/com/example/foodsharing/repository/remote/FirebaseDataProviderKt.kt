@@ -26,22 +26,26 @@ class FirebaseDataProviderKt : DatabaseProvider {
 // Create a new user with a first and last name
         val firebaseModel: MutableMap<String, Any> = HashMap()
         firebaseModel["title"] = model.title
-        firebaseModel["addressTitle"] = model.address_title
+        firebaseModel["latitude"] = model.address[0]
+        firebaseModel["longitude"] = model.address[1]
         firebaseModel["data"] = model.data
 
 // Add a new document with a generated ID
         db.collection("foods")
-                .add(firebaseModel)
-                .addOnSuccessListener(object : OnSuccessListener<DocumentReference> {
-                    override fun onSuccess(documentReference: DocumentReference) {
-                        Log.d(javaClass.simpleName, "DocumentSnapshot added with ID: " + documentReference.id)
-                    }
-                })
-                .addOnFailureListener(object : OnFailureListener {
-                    override fun onFailure(e: Exception) {
-                        Log.w(javaClass.simpleName, "Error adding document", e)
-                    }
-                })
+            .add(firebaseModel)
+            .addOnSuccessListener(object : OnSuccessListener<DocumentReference> {
+                override fun onSuccess(documentReference: DocumentReference) {
+                    Log.d(
+                        javaClass.simpleName,
+                        "DocumentSnapshot added with ID: " + documentReference.id
+                    )
+                }
+            })
+            .addOnFailureListener(object : OnFailureListener {
+                override fun onFailure(e: Exception) {
+                    Log.w(javaClass.simpleName, "Error adding document", e)
+                }
+            })
     }
 
     override fun observeFoods(): Flow<List<FoodModel>> {
@@ -52,30 +56,43 @@ class FirebaseDataProviderKt : DatabaseProvider {
     override fun getDataFromFirebase() {
         if (subscribeOnDb) return
         handleFoodsReference(
-                {
-                    getFoodsCollection().addSnapshotListener { snapshot, e ->
-                        if (e != null) {
-                            Log.e(javaClass.simpleName, "Observe Foods exception: $e")
-                        } else if (snapshot != null) {
-                            val foods = mutableListOf<FoodModel>()
+            {
+                getFoodsCollection().addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        Log.e(javaClass.simpleName, "Observe Foods exception: $e")
+                    } else if (snapshot != null) {
+                        val foods = mutableListOf<FoodModel>()
 
-                            for (doc: QueryDocumentSnapshot in snapshot) {
-                                foods.add(doc.toObject(FoodModel::class.java))
+                        for (doc: QueryDocumentSnapshot in snapshot) {
+
+                            if(doc["latitude"] as Double? !=null) {
+                                val model = FoodModel(
+                                    doc.get("url") as String?,
+                                    doc["title"] as String?,
+                                    doc["latitude"] as Double?,
+                                    doc["longitude"] as Double?,
+                                    doc["data"] as String?
+                                )
+
+                                foods.add(model)
+                            }else{
+                                doc.reference.delete();
                             }
-                            result.value = foods
                         }
+                        result.value = foods
                     }
-                    subscribeOnDb = true
-                }, {
-            Log.e(javaClass.simpleName, "Error subscribe, message: ${it.message}")
-        }
+                }
+                subscribeOnDb = true
+            }, {
+                Log.e(javaClass.simpleName, "Error subscribe, message: ${it.message}")
+            }
 
         )
     }
 
     private inline fun handleFoodsReference(
-            referenceHandler: (CollectionReference) -> Unit,
-            exceptionHandler: (Throwable) -> Unit = {}
+        referenceHandler: (CollectionReference) -> Unit,
+        exceptionHandler: (Throwable) -> Unit = {}
     ) {
         kotlin.runCatching {
             getFoodsCollection()

@@ -1,16 +1,24 @@
 package com.example.foodsharing.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-public class FoodModel {
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class FoodModel implements Serializable {
     String url = "https://wmpics.pics/dm-0FXF.jpg";
     String title;
-    String address_title;
+    double latitude, longitude;
     String data;
 
-    FoodModel(){
+    public FoodModel() {
 
     }
+
     public String getUrl() {
         return url;
     }
@@ -19,12 +27,29 @@ public class FoodModel {
         return title;
     }
 
-    public String getAddress_title() {
-        return address_title;
+    public ArrayList<Double> getAddress() {
+        return new ArrayList<>(Arrays.asList(latitude, longitude));
     }
 
     public String getData() {
         return data;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAddress(LatLng coordinates) {
+        latitude = coordinates.latitude;
+        longitude = coordinates.longitude;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     @Override
@@ -32,14 +57,16 @@ public class FoodModel {
         return "FoodModel{" +
                 "url='" + url + '\'' +
                 ", title='" + title + '\'' +
-                ", address_title='" + address_title + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 ", data='" + data + '\'' +
                 '}';
     }
 
-    public FoodModel(String title, String address_title, String data) {
+    public FoodModel(String url, String title, @Nullable Double latitude, @Nullable Double longitude, String data) {
         this.title = title;
-        this.address_title = address_title;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.data = data;
     }
 }
