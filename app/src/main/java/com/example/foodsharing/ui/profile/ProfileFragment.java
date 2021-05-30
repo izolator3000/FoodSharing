@@ -15,9 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.foodsharing.R;
-import com.example.foodsharing.ui.request.CreateRequestActivity;
+import com.example.foodsharing.ui.main.MainActivity;
 import com.example.foodsharing.ui.main.SplashActivity;
 import com.example.foodsharing.ui.main.SplashViewState;
+import com.example.foodsharing.ui.request.CreateRequestActivity;
 import com.example.foodsharing.util.Constants;
 import com.example.foodsharing.util.PicassoLoader;
 import com.firebase.ui.auth.AuthUI;
@@ -69,6 +70,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CreateRequestActivity.class));
+                ((MainActivity) requireActivity()).navigateToFoodScreen();
             }
         });
 

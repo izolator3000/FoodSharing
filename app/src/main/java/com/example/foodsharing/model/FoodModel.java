@@ -14,6 +14,11 @@ public class FoodModel implements Serializable {
     String title;
     double latitude, longitude;
     String data;
+    String email;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public FoodModel() {
 

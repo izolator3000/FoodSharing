@@ -17,12 +17,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.foodsharing.R;
 import com.example.foodsharing.model.FoodModel;
 import com.example.foodsharing.util.Constants;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Objects;
 
 public class CreateRequestActivity extends AppCompatActivity {
@@ -68,7 +65,10 @@ public class CreateRequestActivity extends AppCompatActivity {
             } else {
                 model.setTitle(Objects.requireNonNull(titleInputLayout.getText()).toString());
                 model.setData("Срок годности: " + selectedDate);
+                // String email = createRequestViewModel.getEmail();
+               //  model.setEmail(email);
                 createRequestViewModel.pushRequest(model);
+                finish();
             }
         });
 

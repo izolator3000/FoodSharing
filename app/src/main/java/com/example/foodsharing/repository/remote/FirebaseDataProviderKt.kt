@@ -1,10 +1,13 @@
 package com.example.foodsharing.repository.remote
 
 import android.util.Log
+import com.example.foodsharing.NoAuthException
 import com.example.foodsharing.model.FoodModel
+import com.example.foodsharing.model.User
 import com.example.foodsharing.repository.DatabaseProvider
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,8 +17,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import java.util.*
 
-class FirebaseDataProviderKt : DatabaseProvider {
-    var db = FirebaseFirestore.getInstance()
+private const val FOODS_COLLECTION = "foods"
+private const val USERS_COLLECTION = "users"
+
+class FirebaseDataProviderKt() : DatabaseProvider {
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val currentUser
+        get() = auth.currentUser
+
 
     private val result = MutableStateFlow<List<FoodModel>?>(null)
     private var subscribeOnDb = false
@@ -54,6 +64,7 @@ class FirebaseDataProviderKt : DatabaseProvider {
     }
 
     override fun getDataFromFirebase() {
+
         if (subscribeOnDb) return
         handleFoodsReference(
             {
@@ -65,7 +76,7 @@ class FirebaseDataProviderKt : DatabaseProvider {
 
                         for (doc: QueryDocumentSnapshot in snapshot) {
 
-                            if(doc["latitude"] as Double? !=null) {
+                            if (doc["latitude"] as Double? != null) {
                                 val model = FoodModel(
                                     doc.get("url") as String?,
                                     doc["title"] as String?,
@@ -75,7 +86,7 @@ class FirebaseDataProviderKt : DatabaseProvider {
                                 )
 
                                 foods.add(model)
-                            }else{
+                            } else {
                                 doc.reference.delete();
                             }
                         }
@@ -94,11 +105,17 @@ class FirebaseDataProviderKt : DatabaseProvider {
         referenceHandler: (CollectionReference) -> Unit,
         exceptionHandler: (Throwable) -> Unit = {}
     ) {
-        kotlin.runCatching {
+        runCatching {
             getFoodsCollection()
         }.fold(referenceHandler, exceptionHandler)
     }
 
-    private fun getFoodsCollection() = db.collection("foods")
 
+    override fun getCurrentUser(): User? = currentUser?.run { User(displayName, email) }
+
+    private fun getUserFoodsCollection() = currentUser?.let {
+        db.collection(USERS_COLLECTION).document(it.uid).collection(FOODS_COLLECTION)
+    } ?: throw  NoAuthException()
+
+    private fun getFoodsCollection() = db.collection("foods")
 }

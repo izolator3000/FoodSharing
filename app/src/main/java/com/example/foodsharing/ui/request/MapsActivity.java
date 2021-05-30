@@ -1,32 +1,29 @@
 package com.example.foodsharing.ui.request;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.telephony.CellIdentity;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.foodsharing.R;
-import com.example.foodsharing.model.FoodModel;
+import com.example.foodsharing.ui.food.FoodFragmentKt;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,27 +37,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private MaterialButton getAddressBtn = null;
 
+    private double latitude = -34f, longitude = 151f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         initViews();
-        getAddressBtn.setOnClickListener(v -> {
-            if (coordinates != null) {
-                Bundle args = new Bundle();
-                args.putParcelable(CreateRequestActivity.EXTRA_MAP_BUNDLE,coordinates);
-                Intent intent = new Intent();
-                intent.putExtra(CreateRequestActivity.EXTRA_BUNDLE, args);
-                setResult(RESULT_OK,intent);
-                finish();
-            }
-        });
+        if (getIntent().getDoubleArrayExtra(FoodFragmentKt.EXTRA_COORDINATES) != null) {
+            latitude = getIntent().getDoubleArrayExtra(FoodFragmentKt.EXTRA_COORDINATES)[0];
+            longitude = getIntent().getDoubleArrayExtra(FoodFragmentKt.EXTRA_COORDINATES)[1];
+            getAddressBtn.setText(R.string.go_to_chat);
+            getAddressBtn.setOnClickListener(v -> {
+                createDialog();
+            });
+        } else {
+            getAddressBtn.setOnClickListener(v -> {
+                if (coordinates != null) {
+                    Bundle args = new Bundle();
+                    args.putParcelable(CreateRequestActivity.EXTRA_MAP_BUNDLE, coordinates);
+                    Intent intent = new Intent();
+                    intent.putExtra(CreateRequestActivity.EXTRA_BUNDLE, args);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         requestPermissions();
+    }
+
+    private void createDialog() {
+        new MaterialAlertDialogBuilder(this).setTitle("Email")
+                .setMessage("URL: ")
+//                .setNegativeButton("Отменить", (dialog, which) -> {
+//                })
+//                .setPositiveButton("Написать", (dialog, which) -> onLogout())
+                .show();
     }
 
     private void initViews() {
@@ -127,9 +144,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+        LatLng sydney = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12.0f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

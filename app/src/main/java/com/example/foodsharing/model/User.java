@@ -27,6 +27,11 @@ public class User {
                 '}';
     }
 
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -46,11 +51,16 @@ public class User {
     public String getUid() {
         return uid;
     }
-    public Uri getPhotoUrl(){return photoUrl;}
+
+    public Uri getPhotoUrl() {
+        return photoUrl;
+    }
 
     public void setUid(String uid) {
         this.uid = uid;
     }
 
-    public void setUrl(Uri url){this.photoUrl = url;}
+    public void setUrl(Uri url) {
+        this.photoUrl = url;
+    }
 }
