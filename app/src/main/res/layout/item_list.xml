@@ -8,6 +8,7 @@
     app:cardCornerRadius="20dp"
     android:layout_margin="20dp"
     android:backgroundTint="#FFC107"
+    android:id="@+id/root"
     android:layout_height="wrap_content">
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,23 +38,13 @@
         tools:text="Title" />
 
     <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/food_image"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        tools:text="Address: time" />
-
-    <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/food_image"
-        app:layout_constraintTop_toBottomOf="@id/address"
+        app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="04.04.2021" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,13 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.foodsharing.model.User;
-import com.example.foodsharing.repository.Provider;
+import com.example.foodsharing.repository.DatabaseProvider;
 import com.example.foodsharing.repository.Repository;
 
 public class SplashViewModel extends ViewModel {
     private final MutableLiveData<SplashViewState> viewStateLiveData = new MutableLiveData(SplashViewState.EMPTY);
 
-    private final Provider repository = new Repository();
+    private final DatabaseProvider repository = new Repository();
    {
        requestUser();
    }

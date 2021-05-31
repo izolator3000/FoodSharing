@@ -7,16 +7,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
-import java.util.Map;
 
 import kotlinx.coroutines.flow.Flow;
 
-public class Repository implements Provider {
+public class Repository implements DatabaseProvider {
     FirebaseDataProviderKt fbDataProvider = new FirebaseDataProviderKt();
 
     @Override
     public Flow<List<FoodModel>> observeFoods() {
         return fbDataProvider.observeFoods();
+    }
+
+    @Override
+    public void getDataFromFirebase() {
+
     }
 
     @Override
@@ -27,14 +31,11 @@ public class Repository implements Provider {
     @Override
     public User getCurrentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User currentUser = new User();
-        if (user != null) {
-            currentUser.setName(user.getDisplayName());
-            currentUser.setEmail(user.getEmail());
-            currentUser.setEmailVerified(user.isEmailVerified());
-            currentUser.setUid(user.getUid());
-            currentUser.setUrl(user.getPhotoUrl());
-        }
+        assert user != null;
+        User currentUser = new User(user.getDisplayName(),user.getEmail());
+        currentUser.setEmailVerified(user.isEmailVerified());
+        currentUser.setUid(user.getUid());
+        currentUser.setUrl(user.getPhotoUrl());
         return currentUser;
     }
 }
