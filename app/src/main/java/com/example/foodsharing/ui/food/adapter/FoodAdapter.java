@@ -70,7 +70,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             date.setText(currentData.getData());
             PicassoLoader.loadImage(Uri.parse(currentData.getUrl()), foodImage);
             root.setOnClickListener(v -> {
-                onFoodClickListener.onClick(currentData.getAddress());
+                onFoodClickListener.onClick(currentData);
             });
         }
     }

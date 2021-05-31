@@ -20,6 +20,10 @@ public class FoodModel implements Serializable {
         this.email = email;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public FoodModel() {
 
     }
@@ -68,7 +72,8 @@ public class FoodModel implements Serializable {
                 '}';
     }
 
-    public FoodModel(String url, String title, @Nullable Double latitude, @Nullable Double longitude, String data) {
+    public FoodModel(String email, String title, @Nullable Double latitude, @Nullable Double longitude, String data) {
+        this.email = email;
         this.title = title;
         this.latitude = latitude;
         this.longitude = longitude;

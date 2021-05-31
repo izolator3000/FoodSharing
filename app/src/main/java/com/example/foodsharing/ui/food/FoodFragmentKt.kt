@@ -25,7 +25,7 @@ class FoodFragmentKt : Fragment() {
     private val foodAdapter = FoodAdapter()
 
     companion object {
-        const val EXTRA_COORDINATES = "EXTRA_COORDINATES"
+        const val EXTRA_FOOD = "EXTRA_FOOD"
     }
 
     override fun onCreateView(
@@ -51,7 +51,7 @@ class FoodFragmentKt : Fragment() {
         }
         foodAdapter.attachListener {
             val intent =
-                Intent(context, MapsActivity::class.java).apply { putExtra(EXTRA_COORDINATES, it.toDoubleArray()) }
+                Intent(context, MapsActivity::class.java).apply { putExtra(EXTRA_FOOD, it) }
             startActivity(intent)
         }
         listOfFood = view.findViewById(R.id.list_of_food)

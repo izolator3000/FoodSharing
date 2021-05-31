@@ -16,4 +16,8 @@ public class CreateRequestViewModel extends ViewModel {
         provider.pushRequest(model);
         Log.e(getClass().getSimpleName(), model.toString());
     }
+
+    public String getEmail() {
+        return provider.getCurrentUser().getEmail();
+    }
 }

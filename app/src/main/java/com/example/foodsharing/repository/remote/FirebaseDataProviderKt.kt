@@ -35,6 +35,7 @@ class FirebaseDataProviderKt() : DatabaseProvider {
 
 // Create a new user with a first and last name
         val firebaseModel: MutableMap<String, Any> = HashMap()
+        firebaseModel["email"] = model.email
         firebaseModel["title"] = model.title
         firebaseModel["latitude"] = model.address[0]
         firebaseModel["longitude"] = model.address[1]
@@ -78,7 +79,7 @@ class FirebaseDataProviderKt() : DatabaseProvider {
 
                             if (doc["latitude"] as Double? != null) {
                                 val model = FoodModel(
-                                    doc.get("url") as String?,
+                                    doc.get("email") as String?,
                                     doc["title"] as String?,
                                     doc["latitude"] as Double?,
                                     doc["longitude"] as Double?,
