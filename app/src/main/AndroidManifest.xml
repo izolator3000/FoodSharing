@@ -45,6 +45,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.request.CreateRequestActivity" />
+
+        <activity android:name=".ui.food.FoodsOnMapsActivity"/>
     </application>
 
 </manifest>

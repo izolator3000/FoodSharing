@@ -51,7 +51,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private ClipboardManager myClipboard = null;
     private ClipData myClip = null;
-    private MapsViewModel mapsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,31 +58,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         initViews();
         requestPermissions();
-        mapsViewModel =
-                new ViewModelProvider(this).get(MapsViewModel.class);
-        if (getIntent().getStringExtra(FoodFragmentKt.EXTRA_OPEN_MAPS_WITH_ALL_FOODS).equals("")) {
-            mapsViewModel.getData();
-        }
-        model = (FoodModel) getIntent().getSerializableExtra(FoodFragmentKt.EXTRA_FOOD);
-        if (model != null) {
-            latitude = model.getAddress().get(0);
-            longitude = model.getAddress().get(1);
-            getAddressBtn.setText(R.string.go_to_chat);
-            getAddressBtn.setOnClickListener(v -> {
-                createDialog();
-            });
-        } else {
-            getAddressBtn.setOnClickListener(v -> {
-                if (coordinates != null) {
-                    Bundle args = new Bundle();
-                    args.putParcelable(CreateRequestActivity.EXTRA_MAP_BUNDLE, coordinates);
-                    Intent intent = new Intent();
-                    intent.putExtra(CreateRequestActivity.EXTRA_BUNDLE, args);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-            });
-        }
+
+        getAddressBtn.setOnClickListener(v -> {
+            if (coordinates != null) {
+                Bundle args = new Bundle();
+                args.putParcelable(CreateRequestActivity.EXTRA_MAP_BUNDLE, coordinates);
+                Intent intent = new Intent();
+                intent.putExtra(CreateRequestActivity.EXTRA_BUNDLE, args);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -180,15 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mapsViewModel.observeData().observe(this, new Observer<FoodsViewState>() {
-            @Override
-            public void onChanged(FoodsViewState foodsViewState) {
-                if (foodsViewState instanceof FoodsViewState.Value) {
-                    List<FoodModel> foods = ((FoodsViewState.Value) foodsViewState).getFoods();
-                    setMarkers(foods);
-                }
-            }
-        });
 
         LatLng currentLocation = new LatLng(latitude, longitude);
 
@@ -205,15 +182,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    private void setMarkers(List<FoodModel> foods) {
-        for (int i = 0; i < foods.size(); i++) {
-            addMarker(new LatLng(foods.get(i).getAddress().get(0), foods.get(i).getAddress().get(1)));
-        }
-    }
-
     private void addMarker(LatLng location) {
-        String title = Integer.toString(markers.size());
-        Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(title));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(location));
         markers.add(marker);
     }
 }

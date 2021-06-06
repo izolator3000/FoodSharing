@@ -11,10 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodsharing.R
-import com.example.foodsharing.model.FoodModel
 import com.example.foodsharing.ui.food.adapter.FoodAdapter
-import com.example.foodsharing.ui.request.MapsActivity
-import com.google.common.collect.Maps
 import java.util.*
 
 class FoodFragmentKt : Fragment() {
@@ -56,7 +53,7 @@ class FoodFragmentKt : Fragment() {
         }
         foodAdapter.attachListener {
             val intent =
-                Intent(context, MapsActivity::class.java).apply { putExtra(EXTRA_FOOD, it) }
+                Intent(context, FoodsOnMapsActivity::class.java).apply { putExtra(EXTRA_FOOD, it) }
             startActivity(intent)
         }
         listOfFood = view.findViewById(R.id.list_of_food)
@@ -89,7 +86,7 @@ class FoodFragmentKt : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_maps -> {
-                val intent = Intent(context, MapsActivity::class.java).apply {
+                val intent = Intent(context, FoodsOnMapsActivity::class.java).apply {
                     putExtra(EXTRA_OPEN_MAPS_WITH_ALL_FOODS, "")
                 }
                 startActivity(intent)
