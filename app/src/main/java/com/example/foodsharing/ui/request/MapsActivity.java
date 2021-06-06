@@ -3,7 +3,6 @@ package com.example.foodsharing.ui.request;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -12,15 +11,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.foodsharing.R;
 import com.example.foodsharing.model.FoodModel;
 import com.example.foodsharing.ui.food.FoodFragmentKt;
+import com.example.foodsharing.ui.food.FoodsViewState;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,32 +32,38 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private List<Marker> markers = new ArrayList<Marker>();
+    private Marker currentMarker;
     private GoogleMap mMap;
     private static final int PERMISSION_REQUEST_CODE = 666;
     private LatLng coordinates = null;
 
     private MaterialButton getAddressBtn = null;
 
-    private double latitude = -34f, longitude = 151f;
+    private double latitude = 59.9f, longitude = 30.3f;
 
     private FoodModel model = null;
 
     private ClipboardManager myClipboard = null;
     private ClipData myClip = null;
+    private MapsViewModel mapsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         initViews();
+        requestPermissions();
+        mapsViewModel =
+                new ViewModelProvider(this).get(MapsViewModel.class);
+        if (getIntent().getStringExtra(FoodFragmentKt.EXTRA_OPEN_MAPS_WITH_ALL_FOODS).equals("")) {
+            mapsViewModel.getData();
+        }
         model = (FoodModel) getIntent().getSerializableExtra(FoodFragmentKt.EXTRA_FOOD);
         if (model != null) {
             latitude = model.getAddress().get(0);
@@ -77,13 +84,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             });
         }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        requestPermissions();
     }
+
 
     private void createDialog() {
         // The TextView to show your Text
@@ -142,12 +150,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
-        String provider = locationManager.getBestProvider(criteria, true);
+        String provider = LocationManager.NETWORK_PROVIDER;
         if (provider != null) {
             locationManager.requestLocationUpdates(provider, 10000, 10, new LocationListener() {
                 @Override
                 public void onLocationChanged(@NonNull Location location) {
-//                   TODO
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
+                    LatLng currentPosition = new LatLng(latitude, longitude);
+                    currentMarker.setPosition(currentPosition);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 10));
                 }
             });
         }
@@ -167,10 +180,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12.0f));
+        mapsViewModel.observeData().observe(this, new Observer<FoodsViewState>() {
+            @Override
+            public void onChanged(FoodsViewState foodsViewState) {
+                if (foodsViewState instanceof FoodsViewState.Value) {
+                    List<FoodModel> foods = ((FoodsViewState.Value) foodsViewState).getFoods();
+                    setMarkers(foods);
+                }
+            }
+        });
+
+        LatLng currentLocation = new LatLng(latitude, longitude);
+
+        currentMarker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("You are here"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10.0f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -182,9 +205,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    private void setMarkers(List<FoodModel> foods) {
+        for (int i = 0; i < foods.size(); i++) {
+            addMarker(new LatLng(foods.get(i).getAddress().get(0), foods.get(i).getAddress().get(1)));
+        }
+    }
+
     private void addMarker(LatLng location) {
         String title = Integer.toString(markers.size());
-
         Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(title));
         markers.add(marker);
     }

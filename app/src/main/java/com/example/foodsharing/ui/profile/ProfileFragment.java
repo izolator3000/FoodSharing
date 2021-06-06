@@ -32,7 +32,7 @@ public class ProfileFragment extends Fragment {
     public static final String EXTRA_VIEW_STATE = "EXTRA_VIEW_STATE";
     private ProfileViewModel profileViewModel;
 
-    private MaterialButton historyBtn, gaveFoodBtn, gaveBtn, logOutBtn;
+    private MaterialButton gaveFoodBtn, gaveBtn, logOutBtn;
     private ImageView avatarView;
     private TextView firstNameView;
 
@@ -71,13 +71,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CreateRequestActivity.class));
                 ((MainActivity) requireActivity()).navigateToFoodScreen();
-            }
-        });
-
-        historyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "HistoryBtnClicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -125,7 +118,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initView(View view) {
-        historyBtn = view.findViewById(R.id.history_btn);
         gaveFoodBtn = view.findViewById(R.id.gave_food_btn);
         gaveBtn = view.findViewById(R.id.gave_btn);
         logOutBtn = view.findViewById(R.id.log_out);

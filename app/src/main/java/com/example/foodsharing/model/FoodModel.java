@@ -1,6 +1,5 @@
 package com.example.foodsharing.model;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -8,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class FoodModel implements Serializable {
     String url = "https://wmpics.pics/dm-0FXF.jpg";

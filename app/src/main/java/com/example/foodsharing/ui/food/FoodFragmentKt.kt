@@ -3,9 +3,7 @@ package com.example.foodsharing.ui.food
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,19 +11,26 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodsharing.R
+import com.example.foodsharing.model.FoodModel
 import com.example.foodsharing.ui.food.adapter.FoodAdapter
 import com.example.foodsharing.ui.request.MapsActivity
+import com.google.common.collect.Maps
 import java.util.*
 
 class FoodFragmentKt : Fragment() {
+    private lateinit var menuItem: MenuItem
     private lateinit var foodViewModel: FoodViewModelKt
-
-
     private lateinit var listOfFood: RecyclerView
     private val foodAdapter = FoodAdapter()
 
     companion object {
         const val EXTRA_FOOD = "EXTRA_FOOD"
+        const val EXTRA_OPEN_MAPS_WITH_ALL_FOODS = "EXTRA_OPEN_MAPS_WITH_ALL_FOODS"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -74,5 +79,23 @@ class FoodFragmentKt : Fragment() {
             )!!
         )
         listOfFood.addItemDecoration(dividerItemDecoration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.food_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_maps -> {
+                val intent = Intent(context, MapsActivity::class.java).apply {
+                    putExtra(EXTRA_OPEN_MAPS_WITH_ALL_FOODS, "")
+                }
+                startActivity(intent)
+            }
+            else -> return false
+        }
+        return true
     }
 }

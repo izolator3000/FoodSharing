@@ -28,6 +28,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         notifyDataSetChanged();
     }
 
+    public List<FoodModel> getData(){
+        return data;
+    }
+
     public void attachListener(OnFoodClickListener listener) {
         this.listener = listener;
     }
