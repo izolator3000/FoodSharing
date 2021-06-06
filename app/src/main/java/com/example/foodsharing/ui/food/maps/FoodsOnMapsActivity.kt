@@ -1,4 +1,4 @@
-package com.example.foodsharing.ui.food
+package com.example.foodsharing.ui.food.maps
 
 import android.Manifest
 import android.content.ClipData
@@ -16,6 +16,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodsharing.R
 import com.example.foodsharing.model.FoodModel
+import com.example.foodsharing.ui.food.FoodFragmentKt
+import com.example.foodsharing.ui.food.FoodsViewState
 import com.example.foodsharing.ui.request.MapsViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -65,7 +67,7 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
             latitude = model!!.address[0]
             longitude = model!!.address[1]
             getAddressBtn.setText(R.string.go_to_chat)
-            getAddressBtn.setOnClickListener { createDialog() }
+            getAddressBtn.setOnClickListener { createDialog(model!!.title, model!!.email) }
         }
 
         if (defineLocation) {
@@ -78,12 +80,12 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
     }
 
 
-    private fun createDialog() {
+    private fun createDialog(title: String, snippet: String) {
         // The TextView to show your Text
         val showText = TextView(this)
-        showText.text = model!!.email
+        showText.text = snippet
         showText.setTextIsSelectable(true)
-        MaterialAlertDialogBuilder(this).setTitle("Email")
+        MaterialAlertDialogBuilder(this).setTitle(title)
             .setView(showText) //                .setNegativeButton("Отменить", (dialog, which) -> {
             //                })
             //                .setPositiveButton("Скопировать адрес почты", (dialog, which) -> {
@@ -194,25 +196,49 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
                 }
             })
         val currentLocation = LatLng(latitude, longitude)
-        currentMarker =
-            mMap?.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
+
+        if (defineLocation) {
+            currentMarker =
+                mMap?.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
+        } else {
+            val builder = StringBuilder(model?.email + "\n" + model?.data)
+            mMap!!.addMarker(
+                MarkerOptions().position(currentLocation).title(model?.title)
+                    .snippet(builder.toString())
+            )
+        }
+
         mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10.0f))
+
+        mMap?.setOnMarkerClickListener {
+            if (it.snippet != null) {
+                createDialog(it.title, it.snippet)
+                true
+            }
+            false
+        }
+
     }
 
     private fun setMarkers(foods: List<FoodModel>) {
         for (food in foods) {
             addMarker(
-                LatLng(
-                    food.address[0],
-                    food.address[1]
-                )
+                food
             )
         }
     }
 
-    private fun addMarker(location: LatLng) {
-        val marker = mMap!!.addMarker(MarkerOptions().position(location))
+    private fun addMarker(model: FoodModel) {
+        val foodLocation = LatLng(
+            model.address[0],
+            model.address[1]
+        )
+        val builder = StringBuilder(model.email + "\n" + model.data)
+        val marker = mMap!!.addMarker(
+            MarkerOptions().position(foodLocation).title(model.title).snippet(builder.toString())
+            //.snippet(model?.email).snippet(model?.data)
+        )
+        marker.showInfoWindow()
         markers.add(marker)
     }
-
 }

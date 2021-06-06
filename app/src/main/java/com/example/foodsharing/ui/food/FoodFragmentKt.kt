@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodsharing.R
 import com.example.foodsharing.ui.food.adapter.FoodAdapter
+import com.example.foodsharing.ui.food.maps.FoodsOnMapsActivity
 import java.util.*
 
 class FoodFragmentKt : Fragment() {
