@@ -45,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private MaterialButton getAddressBtn = null;
 
-    private double latitude = 59.9f, longitude = 30.3f;
+    private double latitude = 59.9398f, longitude = 30.3146f;
 
     private FoodModel model = null;
 
