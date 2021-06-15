@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/navigation_chat"
-        android:name="com.example.foodsharing.ui.chat.ChatFragment"
+        android:name="com.birchsapfestival.foodsharing.ui.chat.ChatFragment"
         android:label="@string/title_chat"
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/navigation_food"
-        android:name="com.example.foodsharing.ui.food.FoodFragmentKt"
+        android:name="com.birchsapfestival.foodsharing.ui.food.FoodFragmentKt"
         android:label="@string/title_food"
         tools:layout="@layout/fragment_food" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.foodsharing.ui.profile.ProfileFragment"
+        android:name="com.birchsapfestival.foodsharing.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

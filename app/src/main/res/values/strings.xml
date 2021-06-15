@@ -3,7 +3,8 @@
     <string name="title_food">Food</string>
     <string name="title_chat">Chat</string>
     <string name="title_profile">Profile</string>
-    <string name="input_address_and_title">Введите адрес и название</string>
+    <string name="input_title">Введите название продукта</string>
+    <string name="input_title_max_len">Описание слишком длинное. Не больше 53 символов</string>
     <string name="title_activity_maps">Map</string>
     <string name="go_to_chat">Перейти к диалогу</string>
 </resources>
