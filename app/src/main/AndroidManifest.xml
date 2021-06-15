@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.foodsharing">
+    package="com.birchsapfestival.foodsharing">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -32,21 +32,21 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.request.MapsActivity"
+            android:name="com.birchsapfestival.foodsharing.ui.request.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.birchsapfestival.foodsharing.ui.main.MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".ui.main.SplashActivity">
+        <activity android:name="com.birchsapfestival.foodsharing.ui.main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.request.CreateRequestActivity" />
+        <activity android:name="com.birchsapfestival.foodsharing.ui.request.CreateRequestActivity" />
 
-        <activity android:name=".ui.food.maps.FoodsOnMapsActivity" />
+        <activity android:name="com.birchsapfestival.foodsharing.ui.food.maps.FoodsOnMapsActivity" />
     </application>
 
 </manifest>
