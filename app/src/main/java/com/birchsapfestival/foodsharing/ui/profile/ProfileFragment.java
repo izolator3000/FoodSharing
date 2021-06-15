@@ -18,6 +18,7 @@ import com.birchsapfestival.foodsharing.R;
 import com.birchsapfestival.foodsharing.ui.main.MainActivity;
 import com.birchsapfestival.foodsharing.ui.main.SplashActivity;
 import com.birchsapfestival.foodsharing.ui.main.SplashViewState;
+import com.birchsapfestival.foodsharing.ui.profile.my_food.MyFoodActivity;
 import com.birchsapfestival.foodsharing.ui.request.CreateRequestActivity;
 import com.birchsapfestival.foodsharing.util.Constants;
 import com.birchsapfestival.foodsharing.util.PicassoLoader;
@@ -59,19 +60,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setOnBtnClickListener() {
-        gaveFoodBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "GaveFoodBtnClicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        gaveFoodBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), MyFoodActivity.class)));
 
-        gaveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CreateRequestActivity.class));
-                ((MainActivity) requireActivity()).navigateToFoodScreen();
-            }
+        gaveBtn.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), CreateRequestActivity.class));
+            ((MainActivity) requireActivity()).navigateToFoodScreen();
         });
 
         logOutBtn.setOnClickListener(v -> {

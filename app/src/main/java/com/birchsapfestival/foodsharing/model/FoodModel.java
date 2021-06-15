@@ -2,6 +2,7 @@ package com.birchsapfestival.foodsharing.model;
 
 import androidx.annotation.Nullable;
 
+import com.birchsapfestival.foodsharing.utils.Randomizer;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class FoodModel implements Serializable {
     double latitude, longitude;
     String data;
     String email;
+    Long id = Randomizer.random.nextLong();
 
     public void setEmail(String email) {
         this.email = email;
@@ -31,6 +33,10 @@ public class FoodModel implements Serializable {
 
     public String getUrl() {
         return url;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -73,11 +79,12 @@ public class FoodModel implements Serializable {
                 '}';
     }
 
-    public FoodModel(String email, String title, @Nullable Double latitude, @Nullable Double longitude, String data) {
+    public FoodModel(String email, String title, @Nullable Double latitude, @Nullable Double longitude, String data, Long id) {
         this.email = email;
         this.title = title;
         this.latitude = latitude;
         this.longitude = longitude;
         this.data = data;
+        this.id = id;
     }
 }

@@ -5,11 +5,8 @@ import com.birchsapfestival.foodsharing.NoAuthException
 import com.birchsapfestival.foodsharing.model.FoodModel
 import com.birchsapfestival.foodsharing.model.User
 import com.birchsapfestival.foodsharing.repository.DatabaseProvider
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import kotlinx.coroutines.flow.Flow
@@ -40,23 +37,30 @@ class FirebaseDataProviderKt() : DatabaseProvider {
         firebaseModel["latitude"] = model.address[0]
         firebaseModel["longitude"] = model.address[1]
         firebaseModel["data"] = model.data
+        firebaseModel["id"] = model.id
 
 // Add a new document with a generated ID
-        db.collection("foods")
-            .add(firebaseModel)
-            .addOnSuccessListener(object : OnSuccessListener<DocumentReference> {
-                override fun onSuccess(documentReference: DocumentReference) {
-                    Log.d(
-                        javaClass.simpleName,
-                        "DocumentSnapshot added with ID: " + documentReference.id
-                    )
-                }
-            })
-            .addOnFailureListener(object : OnFailureListener {
-                override fun onFailure(e: Exception) {
-                    Log.w(javaClass.simpleName, "Error adding document", e)
-                }
-            })
+        db.collection("foods").document(model.id.toString())
+            .set(firebaseModel)
+            .addOnSuccessListener {
+                Log.d(
+                    javaClass.simpleName,
+                    "DocumentSnapshot added with ID: " + model.id
+                )
+            }
+            .addOnFailureListener {
+                Log.w(javaClass.simpleName, "Error adding document ${model.id} with exception $it")
+            }
+
+    }
+
+    override fun deleteRequest(foodId: Long) {
+
+        db.collection("foods").document(foodId.toString()).delete().addOnSuccessListener {
+            Log.d(javaClass.simpleName, "Food is deleted with id $foodId")
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error delete food, message: ${it.message}")
+        }
     }
 
     override fun observeFoods(): Flow<List<FoodModel>> {
@@ -83,7 +87,8 @@ class FirebaseDataProviderKt() : DatabaseProvider {
                                     doc["title"] as String?,
                                     doc["latitude"] as Double?,
                                     doc["longitude"] as Double?,
-                                    doc["data"] as String?
+                                    doc["data"] as String?,
+                                    doc["id"] as Long?
                                 )
 
                                 foods.add(model)

@@ -29,10 +29,15 @@ public class Repository implements DatabaseProvider {
     }
 
     @Override
+    public void deleteRequest(Long id) {
+        fbDataProvider.deleteRequest(id);
+    }
+
+    @Override
     public User getCurrentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
-        User currentUser = new User(user.getDisplayName(),user.getEmail());
+        User currentUser = new User(user.getDisplayName(), user.getEmail());
         currentUser.setEmailVerified(user.isEmailVerified());
         currentUser.setUid(user.getUid());
         currentUser.setUrl(user.getPhotoUrl());
