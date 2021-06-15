@@ -3,6 +3,7 @@ package com.birchsapfestival.foodsharing.ui.request;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -11,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -53,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         initViews();
+
         requestPermissions();
 
         getAddressBtn.setOnClickListener(v -> {
@@ -117,7 +120,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length == 2 && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+
                 requestLocation();
+
             }
         }
     }
@@ -133,7 +138,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
         String provider = LocationManager.NETWORK_PROVIDER;
-        if (provider != null) {
+
+        boolean enabled = locationManager != null && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (provider != null && enabled) {
             locationManager.requestLocationUpdates(provider, 10000, 10, new LocationListener() {
                 @Override
                 public void onLocationChanged(@NonNull Location location) {
@@ -145,6 +152,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 10));
                 }
             });
+        } else {
+            Toast.makeText(this, "Не буду работать без включенной геолокации!", Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 

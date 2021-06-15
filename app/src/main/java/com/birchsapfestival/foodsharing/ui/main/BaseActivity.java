@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.birchsapfestival.foodsharing.R;
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class BaseActivity extends AppCompatActivity {
     static final int RC_SIGN_IN = 458;
@@ -17,15 +21,14 @@ public class BaseActivity extends AppCompatActivity {
         ArrayList<AuthUI.IdpConfig> providers =
                 new ArrayList(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
                         new AuthUI.IdpConfig.GoogleBuilder().build()));
-        
+
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                 .setLogo(R.drawable.ic_launcher_foreground).setTheme(R.style.LoginStyle)
                 .setAvailableProviders(providers).build(), RC_SIGN_IN);
     }
 
 
-
-    protected void renderData(){
+    protected void renderData() {
         startMainActivity();
     }
 
@@ -34,8 +37,8 @@ public class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-    protected void renderError(){
+    protected void renderError() {
         startLoginActivity();
-        Toast.makeText(this,"Error! May be wrong password?",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Error! May be wrong password?", Toast.LENGTH_SHORT).show();
     }
 }

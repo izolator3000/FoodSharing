@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -166,13 +167,22 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
         val criteria = Criteria()
         criteria.accuracy = Criteria.ACCURACY_COARSE
         val provider = LocationManager.NETWORK_PROVIDER
-        locationManager.requestLocationUpdates(provider, 10000, 10f) { location ->
-            latitude = location.latitude
-            longitude = location.longitude
-            val currentPosition =
-                LatLng(latitude, longitude)
-            currentMarker?.setPosition(currentPosition)
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 10f))
+
+        val enabled =
+            locationManager != null && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        if (provider != null && enabled) {
+            locationManager.requestLocationUpdates(provider, 10000, 10f) { location ->
+                latitude = location.latitude
+                longitude = location.longitude
+                val currentPosition =
+                    LatLng(latitude, longitude)
+                currentMarker?.setPosition(currentPosition)
+                mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 10f))
+            }
+        } else {
+            Toast.makeText(this, "Не буду работать без включенной геолокации!", Toast.LENGTH_LONG)
+                .show()
+            finish()
         }
     }
 

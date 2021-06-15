@@ -65,4 +65,5 @@
         app:layout_constraintTop_toTopOf="@+id/avatar_view"
         tools:text="Имя" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
