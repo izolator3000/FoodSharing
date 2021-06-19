@@ -5,6 +5,7 @@
     <string name="title_profile">Profile</string>
     <string name="input_title">Введите название продукта</string>
     <string name="input_title_max_len">Описание слишком длинное. Не больше 53 символов</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Map</string>text_dashboard
     <string name="go_to_chat">Перейти к диалогу</string>
+    <string name="text_dashboard">В разработке</string>
 </resources>
