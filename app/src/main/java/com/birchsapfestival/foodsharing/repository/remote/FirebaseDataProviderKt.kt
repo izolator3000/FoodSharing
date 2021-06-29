@@ -32,7 +32,8 @@ class FirebaseDataProviderKt() : DatabaseProvider {
 
 // Create a new user with a first and last name
         val firebaseModel: MutableMap<String, Any> = HashMap()
-        firebaseModel["email"] = model.email
+        firebaseModel["email"] = model.email ?: "null"
+        firebaseModel["phoneNumber"] = model.phoneNumber ?: "null"
         firebaseModel["title"] = model.title
         firebaseModel["latitude"] = model.address[0]
         firebaseModel["longitude"] = model.address[1]
@@ -84,6 +85,7 @@ class FirebaseDataProviderKt() : DatabaseProvider {
                             if (doc["latitude"] as Double? != null) {
                                 val model = FoodModel(
                                     doc.get("email") as String?,
+                                    doc.get("phoneNumber") as String?,
                                     doc["title"] as String?,
                                     doc["latitude"] as Double?,
                                     doc["longitude"] as Double?,
@@ -117,7 +119,8 @@ class FirebaseDataProviderKt() : DatabaseProvider {
     }
 
 
-    override fun getCurrentUser(): User? = currentUser?.run { User(displayName, email) }
+    override fun getCurrentUser(): User? =
+        currentUser?.run { User(displayName, email, phoneNumber) }
 
     private fun getUserFoodsCollection() = currentUser?.let {
         db.collection(USERS_COLLECTION).document(it.uid).collection(FOODS_COLLECTION)

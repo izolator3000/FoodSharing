@@ -20,4 +20,8 @@ public class CreateRequestViewModel extends ViewModel {
     public String getEmail() {
         return provider.getCurrentUser().getEmail();
     }
+
+    public String getPhoneNumber() {
+        return provider.getCurrentUser().getPhoneNumber();
+    }
 }

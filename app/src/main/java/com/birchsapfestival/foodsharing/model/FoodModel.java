@@ -17,9 +17,19 @@ public class FoodModel implements Serializable {
     double latitude, longitude;
     String data;
     String email;
+    String phoneNumber;
+
+    public void setPhoneNumber(@Nullable String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     Long id = Randomizer.random.nextLong();
 
-    public void setEmail(String email) {
+    public void setEmail(@Nullable String email) {
         this.email = email;
     }
 
@@ -79,8 +89,9 @@ public class FoodModel implements Serializable {
                 '}';
     }
 
-    public FoodModel(String email, String title, @Nullable Double latitude, @Nullable Double longitude, String data, Long id) {
+    public FoodModel(@Nullable String email, @Nullable String phoneNumber, String title, @Nullable Double latitude, @Nullable Double longitude, String data, Long id) {
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.title = title;
         this.latitude = latitude;
         this.longitude = longitude;
