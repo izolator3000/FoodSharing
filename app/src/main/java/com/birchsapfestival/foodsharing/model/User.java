@@ -2,9 +2,12 @@ package com.birchsapfestival.foodsharing.model;
 
 import android.net.Uri;
 
+import javax.annotation.Nullable;
+
 public class User {
     private String name;
     private String email;
+    private String phoneNumber;
     private boolean emailVerified;
     private String uid;
     private Uri photoUrl;
@@ -17,6 +20,14 @@ public class User {
         this.name = name;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -27,9 +38,10 @@ public class User {
                 '}';
     }
 
-    public User(String name, String email) {
+    public User(String name, @Nullable String email, @Nullable String phoneNumber) {
         this.name = name;
         this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {

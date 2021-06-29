@@ -142,6 +142,7 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
         permissions: Array<String?>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.size == 2 && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)
             ) {
@@ -211,7 +212,9 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
             currentMarker =
                 mMap?.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
         } else {
-            val builder = StringBuilder(model?.email + "\n" + model?.data)
+            model?.email ?: model?.phoneNumber
+            val info = model?.phoneNumber
+            val builder = StringBuilder(info + "\n" + model?.data)
             mMap!!.addMarker(
                 MarkerOptions().position(currentLocation).title(model?.title)
                     .snippet(builder.toString())

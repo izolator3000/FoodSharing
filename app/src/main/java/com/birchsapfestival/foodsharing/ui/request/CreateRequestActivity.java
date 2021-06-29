@@ -69,7 +69,9 @@ public class CreateRequestActivity extends AppCompatActivity {
                 model.setTitle(Objects.requireNonNull(titleInputLayout.getText()).toString());
                 model.setData("Срок годности: " + selectedDate);
                 String email = createRequestViewModel.getEmail();
+                String phoneNumber = createRequestViewModel.getPhoneNumber();
                 model.setEmail(email);
+                model.setPhoneNumber(phoneNumber);
                 createRequestViewModel.pushRequest(model);
                 finish();
             }

@@ -19,8 +19,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void startLoginActivity() {
         ArrayList<AuthUI.IdpConfig> providers =
-                new ArrayList(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
-                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+                new ArrayList(Arrays.asList(
                         new AuthUI.IdpConfig.PhoneBuilder()
                                 .setDefaultNumber("ca", "23456789")
                                 .build()));

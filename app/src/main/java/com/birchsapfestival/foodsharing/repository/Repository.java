@@ -37,7 +37,7 @@ public class Repository implements DatabaseProvider {
     public User getCurrentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
-        User currentUser = new User(user.getDisplayName(), user.getEmail());
+        User currentUser = new User(user.getDisplayName(), user.getEmail(),user.getPhoneNumber());
         currentUser.setEmailVerified(user.isEmailVerified());
         currentUser.setUid(user.getUid());
         currentUser.setUrl(user.getPhotoUrl());
