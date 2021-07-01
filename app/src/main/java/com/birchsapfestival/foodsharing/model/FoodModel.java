@@ -66,8 +66,14 @@ public class FoodModel implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
-    public void setType(String type) { this.type = type; }
-    public String getType() { return type; }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -101,6 +107,10 @@ public class FoodModel implements Serializable {
         this.longitude = longitude;
         this.data = data;
         this.id = id;
+        this.type = type;
+    }
+
+    public void setFilter(String type) {
         this.type = type;
     }
 }
