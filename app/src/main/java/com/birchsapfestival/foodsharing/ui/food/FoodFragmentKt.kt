@@ -13,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.birchsapfestival.foodsharing.R
 import com.birchsapfestival.foodsharing.ui.food.adapter.FoodAdapter
 import com.birchsapfestival.foodsharing.ui.food.maps.FoodsOnMapsActivity
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class FoodFragmentKt : Fragment() {
     private lateinit var menuItem: MenuItem
     private lateinit var foodViewModel: FoodViewModelKt
     private lateinit var listOfFood: RecyclerView
+    private lateinit var openMapsFab: ExtendedFloatingActionButton
     private val foodAdapter = FoodAdapter()
 
     companion object {
@@ -41,6 +44,7 @@ class FoodFragmentKt : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews(view)
         foodViewModel.getData();
 
         foodViewModel.observeData().observe(viewLifecycleOwner) {
@@ -57,7 +61,6 @@ class FoodFragmentKt : Fragment() {
                 Intent(context, FoodsOnMapsActivity::class.java).apply { putExtra(EXTRA_FOOD, it) }
             startActivity(intent)
         }
-        listOfFood = view.findViewById(R.id.list_of_food)
         listOfFood.setLayoutManager(
             LinearLayoutManager(
                 context,
@@ -77,6 +80,18 @@ class FoodFragmentKt : Fragment() {
             )!!
         )
         listOfFood.addItemDecoration(dividerItemDecoration)
+
+        openMapsFab.setOnClickListener{
+            val intent = Intent(context, FoodsOnMapsActivity::class.java).apply {
+                putExtra(EXTRA_OPEN_MAPS_WITH_ALL_FOODS, "")
+            }
+            startActivity(intent)
+        }
+    }
+
+    private fun initViews(view: View) {
+        listOfFood = view.findViewById(R.id.list_of_food)
+        openMapsFab= view.findViewById(R.id.open_maps_fab)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -85,15 +100,7 @@ class FoodFragmentKt : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_maps -> {
-                val intent = Intent(context, FoodsOnMapsActivity::class.java).apply {
-                    putExtra(EXTRA_OPEN_MAPS_WITH_ALL_FOODS, "")
-                }
-                startActivity(intent)
-            }
-            else -> return false
-        }
+        foodAdapter.filter.filter(item.title)
         return true
     }
 }

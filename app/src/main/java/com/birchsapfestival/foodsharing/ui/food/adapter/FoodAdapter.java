@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,19 +17,27 @@ import com.birchsapfestival.foodsharing.R;
 import com.birchsapfestival.foodsharing.model.FoodModel;
 import com.birchsapfestival.foodsharing.util.PicassoLoader;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> implements Filterable {
+
     private List<FoodModel> data = new ArrayList<>();
+    private List<FoodModel> dataFiltered;
     private OnFoodClickListener listener = null;
 
     public void setData(List<FoodModel> newData) {
         data = newData;
+
+        dataFiltered = newData;
         notifyDataSetChanged();
     }
 
-    public List<FoodModel> getData(){
+    public List<FoodModel> getData() {
         return data;
     }
 
@@ -50,6 +60,36 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                if (constraint.length() == 0) {
+                    dataFiltered = data;
+                } else {
+                    ArrayList<FoodModel> filteredFood = new ArrayList<>();
+                    for (FoodModel food : data) {
+                        if (food.getType().equals(constraint)) {
+                            filteredFood.add(food);
+                        }
+                    }
+                    dataFiltered = filteredFood;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = dataFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                dataFiltered = (ArrayList<FoodModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class FoodViewHolder extends RecyclerView.ViewHolder {
