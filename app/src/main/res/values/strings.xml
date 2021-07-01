@@ -8,6 +8,13 @@
     <string name="title_activity_maps">Map</string>text_dashboard
     <string name="go_to_chat">Перейти к диалогу</string>
     <string name="text_dashboard">В разработке</string>
+    <string name="open_maps_fab_text">Открыть карту</string>
+    <string name="collect_from_field">Собрать с поля</string>
+    <string name="products">Продукты</string>
+    <string name="things">Вещи</string>
+    <string name="furniture">Мебель</string>
+    <string name="toys">Игрушки</string>
+    <string name="reset_filter">Сбросить фильтр</string>
     <string-array name="filter">
         <item>Собрать с поля</item>
         <item>Продукты</item>

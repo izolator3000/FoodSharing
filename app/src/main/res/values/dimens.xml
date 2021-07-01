@@ -5,4 +5,5 @@
     <dimen name="avatar_size">100dp</dimen>
     <dimen name="avatar_margin">20dp</dimen>
     <dimen name="width_btn_food">200dp</dimen>
+    <dimen name="float_extended_button_margin">20dp</dimen>
 </resources>
