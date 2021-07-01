@@ -73,6 +73,7 @@ public class CreateRequestActivity extends AppCompatActivity {
                 String phoneNumber = createRequestViewModel.getPhoneNumber();
                 model.setEmail(email);
                 model.setPhoneNumber(phoneNumber);
+                model.setFilter(filter.getSelectedItem().toString());
                 createRequestViewModel.pushRequest(model);
                 finish();
             }
