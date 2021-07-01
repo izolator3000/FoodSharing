@@ -37,10 +37,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         notifyDataSetChanged();
     }
 
-    public List<FoodModel> getData() {
-        return data;
-    }
-
     public void attachListener(OnFoodClickListener listener) {
         this.listener = listener;
     }
@@ -54,12 +50,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
-        holder.bind(data.get(position));
+        holder.bind(dataFiltered.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return dataFiltered == null ? 0 : dataFiltered.size();
     }
 
     @Override
@@ -73,7 +69,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                 } else {
                     ArrayList<FoodModel> filteredFood = new ArrayList<>();
                     for (FoodModel food : data) {
-                        if (food.getType().equals(constraint)) {
+                        if (food.getType() != null && food.getType().contentEquals(constraint)) {
                             filteredFood.add(food);
                         }
                     }

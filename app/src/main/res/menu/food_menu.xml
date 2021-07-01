@@ -4,6 +4,9 @@
 
     <group>
         <item
+            android:id="@+id/action_reset_filter"
+            android:title="@string/reset_filter" />
+        <item
             android:id="@+id/action_collect"
             android:title="@string/collect_from_field" />
         <item

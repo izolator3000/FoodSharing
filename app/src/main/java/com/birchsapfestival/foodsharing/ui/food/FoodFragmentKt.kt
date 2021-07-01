@@ -14,7 +14,6 @@ import com.birchsapfestival.foodsharing.R
 import com.birchsapfestival.foodsharing.ui.food.adapter.FoodAdapter
 import com.birchsapfestival.foodsharing.ui.food.maps.FoodsOnMapsActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class FoodFragmentKt : Fragment() {
@@ -81,7 +80,7 @@ class FoodFragmentKt : Fragment() {
         )
         listOfFood.addItemDecoration(dividerItemDecoration)
 
-        openMapsFab.setOnClickListener{
+        openMapsFab.setOnClickListener {
             val intent = Intent(context, FoodsOnMapsActivity::class.java).apply {
                 putExtra(EXTRA_OPEN_MAPS_WITH_ALL_FOODS, "")
             }
@@ -91,7 +90,7 @@ class FoodFragmentKt : Fragment() {
 
     private fun initViews(view: View) {
         listOfFood = view.findViewById(R.id.list_of_food)
-        openMapsFab= view.findViewById(R.id.open_maps_fab)
+        openMapsFab = view.findViewById(R.id.open_maps_fab)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -100,7 +99,10 @@ class FoodFragmentKt : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        foodAdapter.filter.filter(item.title)
+        when (item.itemId) {
+            R.id.action_reset_filter -> foodAdapter.filter.filter("")
+            else -> foodAdapter.filter.filter(item.title)
+        }
         return true
     }
 }

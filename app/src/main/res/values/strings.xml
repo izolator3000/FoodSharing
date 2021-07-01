@@ -14,6 +14,7 @@
     <string name="things">Вещи</string>
     <string name="furniture">Мебель</string>
     <string name="toys">Игрушки</string>
+    <string name="reset_filter">Сбросить фильтр</string>
     <string-array name="filter">
         <item>Собрать с поля</item>
         <item>Продукты</item>
