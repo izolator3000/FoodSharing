@@ -12,27 +12,29 @@ import com.birchsapfestival.foodsharing.repository.DatabaseProvider;
 import com.birchsapfestival.foodsharing.repository.Repository;
 
 public class SplashViewModel extends ViewModel {
-    private final MutableLiveData<SplashViewState> viewStateLiveData = new MutableLiveData(SplashViewState.EMPTY);
+    private final MutableLiveData<SplashViewState> viewStateLiveData = new MutableLiveData();
 
     private final DatabaseProvider repository = new Repository();
-   {
-       requestUser();
-   }
 
-    void requestUser(){
-       if(viewStateLiveData.getValue()!=SplashViewState.EMPTY) {
-           User currentUser = repository.getCurrentUser();
-           if (currentUser != null) {
-               viewStateLiveData.setValue(SplashViewState.AUTH);
-               Log.d(getClass().getSimpleName(), currentUser.toString());
-           }
-       }
+    {
+        requestUser();
     }
 
-    void setViewState(SplashViewState viewState){
-       viewStateLiveData.setValue(viewState);
+    void requestUser() {
+        User currentUser = repository.getCurrentUser();
+        if (currentUser != null) {
+            viewStateLiveData.setValue(SplashViewState.AUTH);
+            Log.d(getClass().getSimpleName(), currentUser.toString());
+        } else {
+            viewStateLiveData.setValue(SplashViewState.EMPTY);
+        }
     }
-    LiveData<SplashViewState> observeViewState(){
-       return viewStateLiveData;
+
+    void setViewState(SplashViewState viewState) {
+        viewStateLiveData.setValue(viewState);
+    }
+
+    LiveData<SplashViewState> observeViewState() {
+        return viewStateLiveData;
     }
 }

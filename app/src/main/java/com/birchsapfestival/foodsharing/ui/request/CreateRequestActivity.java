@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,7 +29,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     private MaterialButton gaveBtn, mapsBtn;
     private TextInputEditText titleInputLayout;
     private CalendarView calendarView;
-    private RadioButton thing, collect;
+    private Spinner filter;
     private CreateRequestViewModel createRequestViewModel;
 
     FoodModel model;
@@ -88,8 +89,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         gaveBtn = findViewById(R.id.gave_btn);
         titleInputLayout = findViewById(R.id.title_text_input_lay);
         calendarView = findViewById(R.id.calendarView);
-        thing = findViewById(R.id.thing);
-        collect = findViewById(R.id.collect_from_field);
+        filter = findViewById(R.id.collect_from_field);
         mapsBtn = findViewById(R.id.maps_button);
     }
 

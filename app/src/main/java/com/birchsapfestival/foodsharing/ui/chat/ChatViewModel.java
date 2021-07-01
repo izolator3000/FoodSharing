@@ -10,7 +10,7 @@ public class ChatViewModel extends ViewModel {
 
     public ChatViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("В разработке. Используйте номер телефона для связи");
     }
 
     public LiveData<String> getText() {

@@ -8,4 +8,21 @@
     <string name="title_activity_maps">Map</string>text_dashboard
     <string name="go_to_chat">Перейти к диалогу</string>
     <string name="text_dashboard">В разработке</string>
+    <string-array name="filter">
+        <item>Собрать с поля</item>
+        <item>Продукты</item>
+        <item>Вещи</item>
+        <item>Мебель</item>
+        <item>Бытовая техника</item>
+        <item>Игрушки</item>
+        <item>Кники</item>
+        <item>Билеты</item>
+        <item>Музыка</item>
+        <item>Материалы для ремонта</item>
+        <item>Животные</item>
+        <item>Спорт/Рыбалка/Охота</item>
+        <item>Авто/Мото/Техника</item>
+        <item>Оборудование</item>
+        <item>Отходы</item>
+    </string-array>
 </resources>

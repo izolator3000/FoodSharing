@@ -42,8 +42,8 @@
             android:id="@+id/maps_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
             android:text="Указать место"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
@@ -58,43 +58,42 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/calendarView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maps_button"
-            app:layout_constraintVertical_bias="0.482" />
+            app:layout_constraintVertical_bias="0.852" />
 
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="88dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.672"
+            app:layout_constraintHorizontal_bias="0.737"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/maps_button" />
 
-        <RadioButton
+        <Spinner
             android:id="@+id/collect_from_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Собрать с поля"
-            app:layout_constraintStart_toStartOf="@+id/calendarView"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
-        <RadioButton
-            android:id="@+id/thing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Вещь"
-            app:layout_constraintStart_toStartOf="@+id/calendarView"
-            app:layout_constraintTop_toBottomOf="@+id/collect_from_field" />
+            android:layout_width="229dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="92dp"
+            android:entries="@array/filter"
+            app:layout_constraintEnd_toStartOf="@+id/textInputLayout2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatar_view"></Spinner>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/gave_btn"
             android:layout_width="@dimen/width_btn_food"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:layout_marginEnd="16dp"
             android:text="Отдать"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

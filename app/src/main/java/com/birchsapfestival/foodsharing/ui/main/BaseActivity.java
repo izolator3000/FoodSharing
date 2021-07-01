@@ -12,6 +12,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class BaseActivity extends AppCompatActivity {
@@ -21,7 +22,8 @@ public class BaseActivity extends AppCompatActivity {
         ArrayList<AuthUI.IdpConfig> providers =
                 new ArrayList(Arrays.asList(
                         new AuthUI.IdpConfig.PhoneBuilder()
-                                .setDefaultNumber("ca", "23456789")
+                                .setDefaultNumber("ru", "23456789")
+                                .setWhitelistedCountries(new ArrayList<>(Arrays.asList("ru", "ua", "by")))
                                 .build()));
 
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()

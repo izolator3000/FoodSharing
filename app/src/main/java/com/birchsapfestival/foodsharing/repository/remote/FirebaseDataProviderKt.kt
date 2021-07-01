@@ -39,6 +39,7 @@ class FirebaseDataProviderKt() : DatabaseProvider {
         firebaseModel["longitude"] = model.address[1]
         firebaseModel["data"] = model.data
         firebaseModel["id"] = model.id
+        firebaseModel["type"] = model.type
 
 // Add a new document with a generated ID
         db.collection("foods").document(model.id.toString())
@@ -82,7 +83,7 @@ class FirebaseDataProviderKt() : DatabaseProvider {
 
                         for (doc: QueryDocumentSnapshot in snapshot) {
 
-                            if (doc["latitude"] as Double? != null) {
+                            if (doc["latitude"] as Double? != null) {// && doc["type"] as String? == "thing"
                                 val model = FoodModel(
                                     doc.get("email") as String?,
                                     doc.get("phoneNumber") as String?,
@@ -90,7 +91,8 @@ class FirebaseDataProviderKt() : DatabaseProvider {
                                     doc["latitude"] as Double?,
                                     doc["longitude"] as Double?,
                                     doc["data"] as String?,
-                                    doc["id"] as Long?
+                                    doc["id"] as Long?,
+                                    doc["type"] as String?
                                 )
 
                                 foods.add(model)

@@ -36,11 +36,13 @@ public class Repository implements DatabaseProvider {
     @Override
     public User getCurrentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
-        User currentUser = new User(user.getDisplayName(), user.getEmail(),user.getPhoneNumber());
-        currentUser.setEmailVerified(user.isEmailVerified());
-        currentUser.setUid(user.getUid());
-        currentUser.setUrl(user.getPhotoUrl());
-        return currentUser;
+        if (user != null) {
+            User currentUser = new User(user.getDisplayName(), user.getEmail(), user.getPhoneNumber());
+            currentUser.setEmailVerified(user.isEmailVerified());
+            currentUser.setUid(user.getUid());
+            currentUser.setUrl(user.getPhotoUrl());
+            return currentUser;
+        }
+        return null;
     }
 }

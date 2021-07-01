@@ -18,6 +18,8 @@ public class FoodModel implements Serializable {
     String data;
     String email;
     String phoneNumber;
+    String type;
+
 
     public void setPhoneNumber(@Nullable String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -64,6 +66,8 @@ public class FoodModel implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+    public void setType(String type) { this.type = type; }
+    public String getType() { return type; }
 
     public void setTitle(String title) {
         this.title = title;
@@ -89,7 +93,7 @@ public class FoodModel implements Serializable {
                 '}';
     }
 
-    public FoodModel(@Nullable String email, @Nullable String phoneNumber, String title, @Nullable Double latitude, @Nullable Double longitude, String data, Long id) {
+    public FoodModel(@Nullable String email, @Nullable String phoneNumber, String title, @Nullable Double latitude, @Nullable Double longitude, String data, Long id, String type) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.title = title;
@@ -97,5 +101,6 @@ public class FoodModel implements Serializable {
         this.longitude = longitude;
         this.data = data;
         this.id = id;
+        this.type = type;
     }
 }
