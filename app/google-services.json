@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:648551012086:android:5e9cf48440eeb013253ed7",
+        "mobilesdk_app_id": "1:648551012086:android:2685f7622fb4e308253ed7",
         "android_client_info": {
           "package_name": "com.birchsapfestival.foodsharing"
         }
       },
       "oauth_client": [
         {
-          "client_id": "648551012086-uv15uko8ab1dpb9fes8cm5ivljrpf7vo.apps.googleusercontent.com",
+          "client_id": "648551012086-v10tv9nb5q85017hfs7gjll27lsd217r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.birchsapfestival.foodsharing",
