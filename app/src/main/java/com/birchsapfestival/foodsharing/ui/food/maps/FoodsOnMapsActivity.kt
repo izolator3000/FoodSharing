@@ -19,6 +19,7 @@ import com.birchsapfestival.foodsharing.R
 import com.birchsapfestival.foodsharing.model.FoodModel
 import com.birchsapfestival.foodsharing.ui.food.FoodFragmentKt
 import com.birchsapfestival.foodsharing.ui.food.FoodsViewState
+import com.birchsapfestival.foodsharing.ui.food.OnMarketSheetDialogFragment
 import com.birchsapfestival.foodsharing.ui.request.MapsViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -68,7 +69,9 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
             latitude = model!!.address[0]
             longitude = model!!.address[1]
             getAddressBtn.setText(R.string.go_to_chat)
-            getAddressBtn.setOnClickListener { createDialog(model!!.title, model!!.email) }
+            getAddressBtn.setOnClickListener {
+                //  createDialog(model!!.title, model!!.email)
+            }
         }
 
         if (defineLocation) {
@@ -225,7 +228,12 @@ class FoodsOnMapsActivity : FragmentActivity(), OnMapReadyCallback {
 
         mMap?.setOnMarkerClickListener {
             if (it.snippet != null) {
-                createDialog(it.title, it.snippet)
+                val testModel = FoodModel();
+                testModel.title = it.title
+                testModel.phoneNumber = it.snippet
+                OnMarketSheetDialogFragment.newInstance(testModel)
+                    .show(supportFragmentManager, "onMarkerSheetDialog")
+                //createDialog(it.title, it.snippet)
                 true
             }
             false
