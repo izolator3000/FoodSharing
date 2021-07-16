@@ -90,4 +90,8 @@ dependencies {
 
     // FirebaseUI for Cloud Storage
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+
+    // Declare the dependency for the Cloud Storage library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-storage'
 }

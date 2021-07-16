@@ -46,6 +46,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_request);
 
         initViews();
+        model = new FoodModel();
         createRequestViewModel =
                 new ViewModelProvider(this).get(CreateRequestViewModel.class);
         avatarView.setOnClickListener(v -> {
@@ -86,7 +87,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     }
 
     void initViews() {
-        avatarView = findViewById(R.id.avatar_view);
+        avatarView = findViewById(R.id.food_image_view);
         gaveBtn = findViewById(R.id.gave_btn);
         titleInputLayout = findViewById(R.id.title_text_input_lay);
         calendarView = findViewById(R.id.calendarView);
@@ -99,6 +100,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_IMAGE.ordinal() && resultCode == RESULT_OK && null != data) {
             Uri selectedImageUri = data.getData();
+            model.setUri(selectedImageUri);
             Log.e(getClass().getSimpleName(), selectedImageUri.toString());
             avatarView.setImageURI(selectedImageUri);
         }

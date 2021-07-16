@@ -1,5 +1,6 @@
 package com.birchsapfestival.foodsharing.repository.remote
 
+import android.net.Uri
 import android.util.Log
 import com.birchsapfestival.foodsharing.NoAuthException
 import com.birchsapfestival.foodsharing.model.FoodModel
@@ -9,10 +10,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import java.util.*
+
 
 private const val FOODS_COLLECTION = "foods"
 private const val USERS_COLLECTION = "users"
@@ -20,6 +24,10 @@ private const val USERS_COLLECTION = "users"
 class FirebaseDataProviderKt() : DatabaseProvider {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val storage = FirebaseStorage.getInstance()
+
+    // Create a storage reference from our app
+    private val storageRef = storage.reference
     private val currentUser
         get() = auth.currentUser
 
@@ -40,7 +48,7 @@ class FirebaseDataProviderKt() : DatabaseProvider {
         firebaseModel["data"] = model.data
         firebaseModel["id"] = model.id
         firebaseModel["type"] = model.type
-
+        uploadImage(model.uri)
 // Add a new document with a generated ID
         db.collection("foods").document(model.id.toString())
             .set(firebaseModel)
@@ -53,6 +61,14 @@ class FirebaseDataProviderKt() : DatabaseProvider {
             .addOnFailureListener {
                 Log.w(javaClass.simpleName, "Error adding document ${model.id} with exception $it")
             }
+
+    }
+
+    private fun uploadImage(uri:Uri) {
+        // Create a child reference
+// imagesRef now points to "images"
+        val imagesRef: StorageReference = storageRef.child("images/images1.jpg")
+        imagesRef.putFile(uri)
 
     }
 

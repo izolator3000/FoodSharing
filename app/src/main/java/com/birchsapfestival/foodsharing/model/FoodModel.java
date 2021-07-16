@@ -1,5 +1,7 @@
 package com.birchsapfestival.foodsharing.model;
 
+import android.net.Uri;
+
 import androidx.annotation.Nullable;
 
 import com.birchsapfestival.foodsharing.utils.Randomizer;
@@ -11,14 +13,15 @@ import java.util.Arrays;
 
 
 public class FoodModel implements Serializable {
-    String url = "https://i0.wp.com/mr-shkaff.ru/800/600/https/33-podelki.ru/wp-content/uploads/2017/12/derevo-trafaret-dlya-vyrezaniya-6.png";
+    private   String url = "https://i0.wp.com/mr-shkaff.ru/800/600/https/33-podelki.ru/wp-content/uploads/2017/12/derevo-trafaret-dlya-vyrezaniya-6.png";
     //"https://reports.exodus-privacy.eu.org/en/reports/79702/icon/"; //"https://wmpics.pics/dm-0FXF.jpg";
-    String title;
-    double latitude, longitude;
-    String data;
-    String email;
-    String phoneNumber;
-    String type;
+    private  String title;
+    private  double latitude, longitude;
+    private  String data;
+    private String email;
+    private String phoneNumber;
+    private String type;
+    private Uri uri;
 
 
     public void setPhoneNumber(@Nullable String phoneNumber) {
@@ -29,6 +32,9 @@ public class FoodModel implements Serializable {
         return phoneNumber;
     }
 
+    public Uri getUri() {
+        return uri;
+    }
     Long id = Randomizer.random.nextLong();
 
     public void setEmail(@Nullable String email) {
@@ -112,5 +118,9 @@ public class FoodModel implements Serializable {
 
     public void setFilter(String type) {
         this.type = type;
+    }
+
+    public void setUri(Uri selectedImageUri) {
+        this.uri = selectedImageUri;
     }
 }
