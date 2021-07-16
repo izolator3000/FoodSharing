@@ -11,12 +11,11 @@
         tools:context=".ui.profile.ProfileFragment">
 
         <ImageView
-            android:visibility="invisible"
-            android:id="@+id/avatar_view"
+            android:id="@+id/food_image_view"
             android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"
             android:layout_margin="@dimen/avatar_margin"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +28,8 @@
             android:hint="Название и описание продукта"
             android:maxLength="53"
             app:hintTextColor="@color/black"
-            app:layout_constraintStart_toEndOf="@id/avatar_view"
-            app:layout_constraintTop_toTopOf="@id/avatar_view">
+            app:layout_constraintStart_toEndOf="@id/food_image_view"
+            app:layout_constraintTop_toTopOf="@id/food_image_view">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/title_text_input_lay"
@@ -53,15 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Срок годности"
+            android:text="Укажите срок действия предложения"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/calendarView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maps_button"
-            app:layout_constraintVertical_bias="0.852" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -77,12 +75,11 @@
             android:id="@+id/collect_from_field"
             android:layout_width="229dp"
             android:layout_height="30dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginTop="116dp"
             android:entries="@array/filter"
-            app:layout_constraintEnd_toStartOf="@+id/textInputLayout2"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/avatar_view" />
+            app:layout_constraintTop_toBottomOf="@+id/food_image_view" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/gave_btn"

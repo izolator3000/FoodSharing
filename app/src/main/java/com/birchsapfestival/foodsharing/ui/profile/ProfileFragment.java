@@ -114,7 +114,7 @@ public class ProfileFragment extends Fragment {
         gaveFoodBtn = view.findViewById(R.id.gave_food_btn);
         gaveBtn = view.findViewById(R.id.gave_btn);
         logOutBtn = view.findViewById(R.id.log_out);
-        avatarView = view.findViewById(R.id.avatar_view);
+        avatarView = view.findViewById(R.id.food_image_view);
         firstNameView = view.findViewById(R.id.first_name);
     }
 }
