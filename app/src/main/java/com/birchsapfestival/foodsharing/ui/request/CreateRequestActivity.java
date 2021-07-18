@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,7 +36,6 @@ public class CreateRequestActivity extends AppCompatActivity {
     public static final String EXTRA_MAP_BUNDLE = "EXTRA_MAP_BUNDLE";
 
     public static final String EXTRA_BUNDLE = "BUNDLE";
-    public static final int MAX_LENGHT = 53;
     public static final int ACTIVITY_REQUEST_CODE = 100;
 
     @Override
@@ -65,10 +63,9 @@ public class CreateRequestActivity extends AppCompatActivity {
         gaveBtn.setOnClickListener(v -> {
             if (titleInputLayout.getText().toString().equals("")) {
                 Toast.makeText(this, getString(R.string.input_title), Toast.LENGTH_SHORT).show();
-            } else if (titleInputLayout.getText().toString().length() > MAX_LENGHT) {
-                Toast.makeText(this, getString(R.string.input_title_max_len), Toast.LENGTH_LONG).show();
             } else {
                 model.setTitle(Objects.requireNonNull(titleInputLayout.getText()).toString());
+
                 model.setData("Срок годности: " + selectedDate);
                 String email = createRequestViewModel.getEmail();
                 String phoneNumber = createRequestViewModel.getPhoneNumber();

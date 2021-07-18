@@ -6,14 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.birchsapfestival.foodsharing.R;
 import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthOptions;
-import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 public class BaseActivity extends AppCompatActivity {
     static final int RC_SIGN_IN = 458;

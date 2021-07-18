@@ -17,12 +17,8 @@ import com.birchsapfestival.foodsharing.R;
 import com.birchsapfestival.foodsharing.model.FoodModel;
 import com.birchsapfestival.foodsharing.util.PicassoLoader;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> implements Filterable {
 

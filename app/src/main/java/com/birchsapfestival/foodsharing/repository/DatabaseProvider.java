@@ -12,7 +12,7 @@ public interface DatabaseProvider {
 
     void getDataFromFirebase();
 
-    void pushRequest(FoodModel model);
+    void  pushRequest(FoodModel model);
 
     void deleteRequest(Long id);
 

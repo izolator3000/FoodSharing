@@ -48,7 +48,7 @@
 
         <activity android:name="com.birchsapfestival.foodsharing.ui.food.maps.FoodsOnMapsActivity" />
 
-        <activity android:name=".ui.profile.my_food.MyFoodActivity" />
+        <activity android:name="com.birchsapfestival.foodsharing.ui.profile.my_food.MyFoodActivity" />
     </application>
 
 </manifest>

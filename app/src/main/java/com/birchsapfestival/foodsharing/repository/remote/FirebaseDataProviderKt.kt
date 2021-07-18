@@ -48,7 +48,8 @@ class FirebaseDataProviderKt() : DatabaseProvider {
         firebaseModel["data"] = model.data
         firebaseModel["id"] = model.id
         firebaseModel["type"] = model.type
-        uploadImage(model.uri)
+            firebaseModel["uri"] = uploadImage(model.uri) ?: "null"
+
 // Add a new document with a generated ID
         db.collection("foods").document(model.id.toString())
             .set(firebaseModel)
@@ -64,18 +65,34 @@ class FirebaseDataProviderKt() : DatabaseProvider {
 
     }
 
-    private fun uploadImage(uri:Uri) {
-        // Create a child reference
-// imagesRef now points to "images"
-        val imagesRef: StorageReference = storageRef.child("images/images1.jpg")
-        imagesRef.putFile(uri)
+    private fun downloadImage():Uri? {
+        var uri:Uri? = null
+        storageRef.child("images/images1.jpg").downloadUrl.addOnSuccessListener {
+            uri = it
+        }.addOnFailureListener {
 
+        }
+        return uri
     }
 
-    override fun deleteRequest(foodId: Long) {
+    private  fun uploadImage(uri:Uri):String? {
+        // Create a child reference
+// imagesRef now points to "images"
+        var uriResult:String? = null
+        val imagesRef: StorageReference = storageRef.child("images/images1.jpg")
+        imagesRef.putFile(uri)
+        imagesRef.downloadUrl.addOnSuccessListener {
+            uriResult= it.toString()
+        }
+        Thread.sleep(3000)
+//imagesRef.downloadUrl.addOnSuccessListener { zzaa.u }
+        return uriResult //imagesRef.downloadUrl.toString() //imagesRef.name//toString()
+    }
 
-        db.collection("foods").document(foodId.toString()).delete().addOnSuccessListener {
-            Log.d(javaClass.simpleName, "Food is deleted with id $foodId")
+    override fun deleteRequest(id: Long) {
+
+        db.collection("foods").document(id.toString()).delete().addOnSuccessListener {
+            Log.d(javaClass.simpleName, "Food is deleted with id $id")
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error delete food, message: ${it.message}")
         }
